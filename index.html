@@ -25,9 +25,29 @@
     </div>
 </div>
 
-<!-- Hier werden die To-Do-Elemente hinzugefügt -->
+<div class="dropdown-container">
+    <select id="day-select" class="mdl-textfield__input">
+        <option value="">Wochentag</option>
+        <option value="1">Montag</option>
+        <option value="2">Dienstag</option>
+        <option value="3">Mittwoch</option>
+        <option value="4">Donnerstag</option>
+        <option value="5">Freitag</option>
+        <option value="6">Samstag</option>
+        <option value="7">Sonntag</option>
+    </select>
+
+    <select id="priority-select" class="mdl-textfield__input">
+        <option value="" selected>Priorität</option>
+        <option value="high">🔴 dringend</option>
+        <option value="medium">🟠 normal</option>
+        <option value="low">🟢 niedrig</option>
+
+    </select>
+</div>
+
 <div id="todo-list" class="todo-list">
-    <!-- Dynamisch hinzugefügte To-Do-Elemente erscheinen hier -->
+
 </div>
 
 <div class="calendar-box">Montag</div>
