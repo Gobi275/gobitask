@@ -30,6 +30,7 @@ header {
     color: #e9e6e1 !important;
     box-shadow: 0 0 8px -2px #000000;
     margin-left: 15px !important;
+    margin-top: 0 !important;
 }
 
 .mdl-button--colored:hover {
@@ -147,10 +148,8 @@ header {
 }
 
 .todo-item:hover {
-    background-color: #2f2f2f !important;
     cursor: pointer;
     transform: scale(1.02);
-    color: #a9a30e;
 }
 
 .calendar-box {
@@ -195,4 +194,53 @@ header {
 .mdl-textfield__input:focus {
     border-color: #a9a30e;
     outline: none;
+}
+
+.dropdown {
+    background-color: #333333;
+    border: #a9a30e 2px solid;
+    border-radius: 20px;
+    color: #e9e6e1;
+}
+
+.dropdown-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+
+#day-select, #priority-select {
+    width: 145px;
+}
+
+#day-select {
+    margin-left: 50px;
+}
+
+.priority-high {
+    background-color: rgba(255, 77, 77, 0.1);
+    border: #ff4d4d 2px solid;
+}
+
+.priority-high:hover {
+    color: #ff4d4d;
+}
+
+.priority-medium {
+    border: #ff9f00 2px solid;
+    background-color: rgba(255, 159, 0, 0.1);
+}
+
+.priority-medium:hover {
+    color: #ff9f00;
+}
+
+.priority-low {
+    border: #4caf50 2px solid;
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.priority-low:hover {
+    color: #4caf50;
 }
