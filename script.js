@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         request.onsuccess = function (event) {
             db = event.target.result;
-            loadTodosIndexedDB();
+            loadTodosIndexedDB(); // Lade alle To-Dos aus der IndexedDB
         };
 
         request.onerror = function (event) {
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         };
     }
 
-    function createTodoItem(todoText, day, priority, id = null) {
+    function createTodoItem(todoText, day, priority, id, playSound = false) {
         const todoItem = document.createElement('div');
         todoItem.classList.add('todo-item');
 
@@ -39,8 +39,11 @@ document.addEventListener('DOMContentLoaded', function () {
             todoItem.classList.add('priority-low');
         }
 
-        const addSound = new Audio('sounds/add.wav');
-        addSound.play();
+        // Nur Sound abspielen, wenn To-Do manuell hinzugefügt wurde
+        if (playSound) {
+            const addSound = new Audio('sounds/add.wav');
+            addSound.play().catch(err => console.warn("Sound konnte nicht abgespielt werden:", err));
+        }
 
         const todoContent = document.createElement('span');
         todoContent.textContent = todoText;
@@ -58,19 +61,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
         deleteBtn.addEventListener('click', () => {
             const deleteSound = new Audio('sounds/delete.wav');
-            deleteSound.play();
+            deleteSound.play().catch(err => console.warn("Sound konnte nicht abgespielt werden:", err));
             todoItem.remove();
-            deleteTodoIndexedDB(id);
+            if (id) deleteTodoIndexedDB(id);
         });
 
         statusBtn.addEventListener('click', function () {
             const checkSound = new Audio('sounds/check.wav');
-            checkSound.play();
+            checkSound.play().catch(err => console.warn("Sound konnte nicht abgespielt werden:", err));
             statusBtn.innerHTML = '<img src="img/checked.png" alt="checked">';
 
             setTimeout(() => {
                 todoItem.remove();
-                deleteTodoIndexedDB(id);
+                if (id) deleteTodoIndexedDB(id);
             }, 350);
         });
 
@@ -84,11 +87,25 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function saveTodosIndexedDB(todoText, day, priority) {
+        if (!db) {
+            console.error("Fehler: IndexedDB ist nicht verfügbar!");
+            return;
+        }
+
         const transaction = db.transaction(['todos'], 'readwrite');
         const store = transaction.objectStore('todos');
 
         const todo = { text: todoText, day, priority };
-        store.add(todo);
+        const request = store.add(todo);
+
+        request.onsuccess = function (event) {
+            const id = event.target.result;
+            createTodoItem(todoText, day, priority, id, true); // Sound nur beim manuellen Hinzufügen!
+        };
+
+        request.onerror = function () {
+            console.error("Fehler beim Speichern des To-Dos");
+        };
     }
 
     function loadTodosIndexedDB() {
@@ -116,7 +133,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (todoText !== '' && selectedDay !== '' && selectedPriority !== '') {
             saveTodosIndexedDB(todoText, parseInt(selectedDay), selectedPriority);
-            createTodoItem(todoText, parseInt(selectedDay), selectedPriority);
             todoInput.value = '';
             document.getElementById('priority-select').value = '';
         }
