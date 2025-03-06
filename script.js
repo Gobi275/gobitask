@@ -4,9 +4,30 @@ document.addEventListener('DOMContentLoaded', function () {
     const todoInput = document.getElementById('sample3');
     const todoList = document.getElementById('todo-list');
 
+    let db;
 
+    // IndexedDB initialisieren
+    function initDB() {
+        const request = indexedDB.open('todoDB', 1);
 
-    function createTodoItem(todoText, day, priority) {
+        request.onupgradeneeded = function (event) {
+            db = event.target.result;
+            if (!db.objectStoreNames.contains('todos')) {
+                db.createObjectStore('todos', { keyPath: 'id', autoIncrement: true });
+            }
+        };
+
+        request.onsuccess = function (event) {
+            db = event.target.result;
+            loadTodosIndexedDB();
+        };
+
+        request.onerror = function (event) {
+            console.error('IndexedDB Fehler:', event.target.errorCode);
+        };
+    }
+
+    function createTodoItem(todoText, day, priority, id = null) {
         const todoItem = document.createElement('div');
         todoItem.classList.add('todo-item');
 
@@ -20,7 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const addSound = new Audio('sounds/add.wav');
         addSound.play();
-
 
         const todoContent = document.createElement('span');
         todoContent.textContent = todoText;
@@ -37,24 +57,20 @@ document.addEventListener('DOMContentLoaded', function () {
         deleteBtn.innerHTML = '<img src="img/delete.png" alt="delete">';
 
         deleteBtn.addEventListener('click', () => {
-
             const deleteSound = new Audio('sounds/delete.wav');
             deleteSound.play();
-
             todoItem.remove();
-            saveTodos();
+            deleteTodoIndexedDB(id);
         });
 
         statusBtn.addEventListener('click', function () {
-
             const checkSound = new Audio('sounds/check.wav');
             checkSound.play();
-
             statusBtn.innerHTML = '<img src="img/checked.png" alt="checked">';
 
             setTimeout(() => {
                 todoItem.remove();
-                saveTodos();
+                deleteTodoIndexedDB(id);
             }, 350);
         });
 
@@ -65,46 +81,46 @@ document.addEventListener('DOMContentLoaded', function () {
         todoItem.appendChild(buttonContainer);
 
         document.querySelector(`.calendar-box:nth-child(${day + 4})`).appendChild(todoItem);
-        saveTodos();
     }
 
-    function saveTodos() {
-        const todos = [];
-        document.querySelectorAll('.calendar-box').forEach((box, index) => {
-            const dayTodos = [];
-            box.querySelectorAll('.todo-item').forEach(todo => {
-                const todoText = todo.querySelector('span').textContent;
-                const priorityClass = todo.classList.contains('priority-high') ? 'high' :
-                    todo.classList.contains('priority-medium') ? 'medium' :
-                        todo.classList.contains('priority-low') ? 'low' : null;
-                dayTodos.push({ text: todoText, priority: priorityClass });
+    function saveTodosIndexedDB(todoText, day, priority) {
+        const transaction = db.transaction(['todos'], 'readwrite');
+        const store = transaction.objectStore('todos');
+
+        const todo = { text: todoText, day, priority };
+        store.add(todo);
+    }
+
+    function loadTodosIndexedDB() {
+        const transaction = db.transaction(['todos'], 'readonly');
+        const store = transaction.objectStore('todos');
+
+        const request = store.getAll();
+        request.onsuccess = function () {
+            request.result.forEach(todo => {
+                createTodoItem(todo.text, todo.day, todo.priority, todo.id);
             });
-            todos.push(dayTodos);
-        });
-        localStorage.setItem('todos', JSON.stringify(todos));
+        };
     }
 
-
-    function loadTodos() {
-        const todos = JSON.parse(localStorage.getItem('todos')) || [];
-        todos.forEach((dayTodos, index) => {
-            dayTodos.forEach(todo => {
-                createTodoItem(todo.text, index + 1, todo.priority); // Priorität beim Erstellen übergeben
-            });
-        });
+    function deleteTodoIndexedDB(id) {
+        const transaction = db.transaction(['todos'], 'readwrite');
+        const store = transaction.objectStore('todos');
+        store.delete(id);
     }
-
 
     addBtn.addEventListener('click', function () {
         const todoText = todoInput.value.trim();
         const selectedDay = document.getElementById('day-select').value;
-        const selectedPriority = document.getElementById('priority-select').value; // Priorität holen
-        if (todoText !== '' && selectedDay !== '' && selectedPriority !== '') { // Überprüfen, ob alles ausgewählt wurde
+        const selectedPriority = document.getElementById('priority-select').value;
+
+        if (todoText !== '' && selectedDay !== '' && selectedPriority !== '') {
+            saveTodosIndexedDB(todoText, parseInt(selectedDay), selectedPriority);
             createTodoItem(todoText, parseInt(selectedDay), selectedPriority);
             todoInput.value = '';
-            document.getElementById('priority-select').value = ''; // Dropdown zurücksetzen
+            document.getElementById('priority-select').value = '';
         }
     });
 
-    loadTodos();
+    initDB();
 });
