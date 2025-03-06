@@ -1,0 +1,198 @@
+body {
+    background-color: #292928;
+    font-family: "Outfit", sans-serif !important;
+    margin: 0;
+}
+
+header {
+    background-color: #222222;
+    color: #a9a30e;
+    height: 100px;
+    box-shadow: 0 5px 13px -2px #000000;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 50px;
+    font-family: "Outfit", sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.text-input-container {
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+    margin-top: 30px;
+}
+
+.mdl-button--colored {
+    background-color: #a9a30e !important;
+    color: #e9e6e1 !important;
+    box-shadow: 0 0 8px -2px #000000;
+    margin-left: 15px !important;
+}
+
+.mdl-button--colored:hover {
+    background-color: #8a8b08 !important;
+    box-shadow: 0 0 10px -2px #000000;
+}
+
+.mdl-textfield__label,
+.mdl-textfield__input {
+    color: #e9e6e1 !important;
+    font-family: "Outfit", sans-serif;
+}
+
+.mdl-textfield__input {
+    background-color: transparent !important;
+    color: #e9e6e1 !important;
+    border-bottom: 2px solid #a9a30e !important;
+}
+
+.mdl-textfield.is-focused .mdl-textfield__input,
+.mdl-textfield.is-dirty .mdl-textfield__input {
+    background-color: transparent !important;
+}
+
+.mdl-textfield__input:-webkit-autofill {
+    background-color: transparent !important;
+}
+
+.mdl-textfield__input:-moz-placeholder {
+    background-color: transparent !important;
+}
+
+.mdl-textfield__input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+}
+
+.mdl-textfield.is-focused .mdl-textfield__label {
+    color: #a9a30e !important;
+}
+
+.mdl-textfield.is-focused .mdl-textfield__input {
+    border-bottom-color: #a9a30e !important;
+}
+
+.mdl-textfield__input::after {
+    background-color: #a9a30e !important;
+}
+
+.mdl-textfield .mdl-textfield__bottom-border {
+    background-color: #a9a30e !important;
+}
+
+.todo-list {
+    margin-top: 30px;
+    margin-left: 50px;
+}
+
+.todo-item {
+    background-color: #333333;
+    color: #e9e6e1;
+    margin: 10px 0;
+    padding: 10px 20px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 500px;
+    box-shadow: 0 5px 8px -5px #000000;
+    transition: 225ms ease-in-out;
+    font-size: 17px;
+    position: relative;
+}
+
+.todo-item span {
+    flex-grow: 1;
+}
+
+.todo-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.status-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.status-btn img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-btn img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.delete-btn:hover {
+    color: #ff0000;
+}
+
+.todo-item:hover {
+    background-color: #2f2f2f !important;
+    cursor: pointer;
+    transform: scale(1.02);
+    color: #a9a30e;
+}
+
+.calendar-box {
+    min-height: 100px;
+    font-size: 20px;
+    font-weight: bold;
+    width: 550px;
+    color: #e9e6e1;
+    margin: 10px;
+    padding: 10px;
+    margin-left: 50px;
+    margin-right: 50px;
+    border-bottom: #a9a30e 2px solid;
+    display: flex;
+    flex-direction: column;
+}
+
+.calendar-box:hover {
+    color: #a9a30e;
+    transition: 225ms ease-in-out;
+}
+
+.mdl-textfield__input {
+    color: #000000;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    padding: 8px;
+    font-size: 16px;
+    font-family: "Outfit", sans-serif !important;
+}
+
+.mdl-textfield__input option {
+    color: #e9e6e1;
+    background-color: #222222;
+    font-family: "Outfit", sans-serif;
+}
+
+.mdl-textfield__input:hover {
+    border-color: #000000;
+}
+
+.mdl-textfield__input:focus {
+    border-color: #a9a30e;
+    outline: none;
+}
