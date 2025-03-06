@@ -4,23 +4,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const todoInput = document.getElementById('sample3');
     const todoList = document.getElementById('todo-list');
 
-    todoForm.insertAdjacentHTML('beforeend', `
-        <select id="day-select" class="mdl-textfield__input">
-            <option value="">Tag auswählen</option>
-            <option value="1">Montag</option>
-            <option value="2">Dienstag</option>
-            <option value="3">Mittwoch</option>
-            <option value="4">Donnerstag</option>
-            <option value="5">Freitag</option>
-            <option value="6">Samstag</option>
-            <option value="7">Sonntag</option>
-        </select>
-    `);
 
-    function createTodoItem(todoText, day) {
+
+    function createTodoItem(todoText, day, priority) {
         const todoItem = document.createElement('div');
         todoItem.classList.add('todo-item');
 
+        if (priority === 'high') {
+            todoItem.classList.add('priority-high');
+        } else if (priority === 'medium') {
+            todoItem.classList.add('priority-medium');
+        } else if (priority === 'low') {
+            todoItem.classList.add('priority-low');
+        }
 
         const addSound = new Audio('sounds/add.wav');
         addSound.play();
@@ -68,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
         todoItem.appendChild(todoContent);
         todoItem.appendChild(buttonContainer);
 
-        document.querySelector(`.calendar-box:nth-child(${day + 3})`).appendChild(todoItem);
+        document.querySelector(`.calendar-box:nth-child(${day + 4})`).appendChild(todoItem);
         saveTodos();
     }
 
@@ -76,29 +72,37 @@ document.addEventListener('DOMContentLoaded', function () {
         const todos = [];
         document.querySelectorAll('.calendar-box').forEach((box, index) => {
             const dayTodos = [];
-            box.querySelectorAll('.todo-item span').forEach(todo => {
-                dayTodos.push(todo.textContent);
+            box.querySelectorAll('.todo-item').forEach(todo => {
+                const todoText = todo.querySelector('span').textContent;
+                const priorityClass = todo.classList.contains('priority-high') ? 'high' :
+                    todo.classList.contains('priority-medium') ? 'medium' :
+                        todo.classList.contains('priority-low') ? 'low' : null;
+                dayTodos.push({ text: todoText, priority: priorityClass });
             });
             todos.push(dayTodos);
         });
         localStorage.setItem('todos', JSON.stringify(todos));
     }
 
+
     function loadTodos() {
         const todos = JSON.parse(localStorage.getItem('todos')) || [];
         todos.forEach((dayTodos, index) => {
             dayTodos.forEach(todo => {
-                createTodoItem(todo, index + 1);
+                createTodoItem(todo.text, index + 1, todo.priority); // Priorität beim Erstellen übergeben
             });
         });
     }
 
+
     addBtn.addEventListener('click', function () {
         const todoText = todoInput.value.trim();
         const selectedDay = document.getElementById('day-select').value;
-        if (todoText !== '' && selectedDay !== '') {
-            createTodoItem(todoText, parseInt(selectedDay));
+        const selectedPriority = document.getElementById('priority-select').value; // Priorität holen
+        if (todoText !== '' && selectedDay !== '' && selectedPriority !== '') { // Überprüfen, ob alles ausgewählt wurde
+            createTodoItem(todoText, parseInt(selectedDay), selectedPriority);
             todoInput.value = '';
+            document.getElementById('priority-select').value = ''; // Dropdown zurücksetzen
         }
     });
 
