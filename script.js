@@ -3,10 +3,75 @@ document.addEventListener('DOMContentLoaded', function () {
     const addBtn = document.getElementById('add-btn');
     const todoInput = document.getElementById('sample3');
     const todoList = document.getElementById('todo-list');
+    const resetBtn = document.querySelector('.reset-button');
 
     let db;
+    const stats = {
+        high: 0,
+        medium: 0,
+        low: 0,
+        total: 0
+    };
 
-    // IndexedDB initialisieren
+    function loadStats() {
+        const savedStats = JSON.parse(localStorage.getItem('taskStats'));
+        if (savedStats) {
+            Object.assign(stats, savedStats);
+            updateStatsUI();
+        }
+    }
+
+    function saveStats() {
+        localStorage.setItem('taskStats', JSON.stringify(stats));
+    }
+
+    function resetStats() {
+        stats.high = 0;
+        stats.medium = 0;
+        stats.low = 0;
+        stats.total = 0;
+        saveStats();
+        updateStatsUI();
+        showPopup("Statistiken erfolgreich zurückgesetzt!");
+    }
+
+    function showPopup(message) {
+        const popup = document.createElement('div');
+        popup.textContent = message;
+        popup.style.position = 'fixed';
+        popup.style.top = '20px';
+        popup.style.left = '50%';
+        popup.style.transform = 'translateX(-50%)';
+        popup.style.backgroundColor = '#a9a30e';
+        popup.style.color = 'white';
+        popup.style.padding = '10px 20px';
+        popup.style.borderRadius = '100px';
+        popup.style.boxShadow = '0 5px 8px -5px #000000';
+        popup.style.zIndex = '1000';
+        document.body.appendChild(popup);
+
+        setTimeout(() => {
+            popup.remove();
+        }, 3000);
+    }
+
+    function updateStatsUI() {
+        document.querySelector(".stats p:nth-child(2)").textContent = `🔴 Hohe Priorität: ${stats.high}`;
+        document.querySelector(".stats p:nth-child(3)").textContent = `🟠 Mittlere Priorität: ${stats.medium}`;
+        document.querySelector(".stats p:nth-child(4)").textContent = `🟢 Niedrige Priorität: ${stats.low}`;
+        document.querySelector(".stats p.bold").textContent = `🔴🟠🟢 Gesamt: ${stats.total}`;
+    }
+
+    function markTaskAsDone(todoItem, priority) {
+        if (priority === 'high') stats.high++;
+        if (priority === 'medium') stats.medium++;
+        if (priority === 'low') stats.low++;
+        stats.total++;
+
+        saveStats();
+        updateStatsUI();
+    }
+
     function initDB() {
         const request = indexedDB.open('todoDB', 1);
 
@@ -19,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         request.onsuccess = function (event) {
             db = event.target.result;
-            loadTodosIndexedDB(); // Lade alle To-Dos aus der IndexedDB
+            loadTodosIndexedDB();
         };
 
         request.onerror = function (event) {
@@ -31,15 +96,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const todoItem = document.createElement('div');
         todoItem.classList.add('todo-item');
 
-        if (priority === 'high') {
-            todoItem.classList.add('priority-high');
-        } else if (priority === 'medium') {
-            todoItem.classList.add('priority-medium');
-        } else if (priority === 'low') {
-            todoItem.classList.add('priority-low');
-        }
+        if (priority === 'high') todoItem.classList.add('priority-high');
+        if (priority === 'medium') todoItem.classList.add('priority-medium');
+        if (priority === 'low') todoItem.classList.add('priority-low');
 
-        // Nur Sound abspielen, wenn To-Do manuell hinzugefügt wurde
         if (playSound) {
             const addSound = new Audio('sounds/add.wav');
             addSound.play().catch(err => console.warn("Sound konnte nicht abgespielt werden:", err));
@@ -71,6 +131,13 @@ document.addEventListener('DOMContentLoaded', function () {
             checkSound.play().catch(err => console.warn("Sound konnte nicht abgespielt werden:", err));
             statusBtn.innerHTML = '<img src="img/checked.png" alt="checked">';
 
+            let priority = '';
+            if (todoItem.classList.contains('priority-high')) priority = 'high';
+            if (todoItem.classList.contains('priority-medium')) priority = 'medium';
+            if (todoItem.classList.contains('priority-low')) priority = 'low';
+
+            markTaskAsDone(todoItem, priority);
+
             setTimeout(() => {
                 todoItem.remove();
                 if (id) deleteTodoIndexedDB(id);
@@ -100,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         request.onsuccess = function (event) {
             const id = event.target.result;
-            createTodoItem(todoText, day, priority, id, true); // Sound nur beim manuellen Hinzufügen!
+            createTodoItem(todoText, day, priority, id, true);
         };
 
         request.onerror = function () {
@@ -138,5 +205,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    resetBtn.addEventListener('click', resetStats);
+
     initDB();
+    loadStats();
 });
