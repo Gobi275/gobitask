@@ -243,3 +243,52 @@ header {
 .priority-low:hover {
     color: #4caf50;
 }
+
+.stats {
+    background-color: #333333;
+    border-radius: 30px;
+    color: #e9e6e1;
+    font-family: "Outfit", sans-serif;
+    margin: 40px 50px;
+    padding: 10px 50px;
+    box-shadow: 0 5px 8px -5px #000000;
+    width: 475px;
+    font-size: 18px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.title {
+    font-family: "Outfit", sans-serif;
+}
+
+.placeholder {
+    height: 50px;
+}
+
+.reset-button {
+    color:  #ff4d4d;
+    background-color: rgba(255, 77, 77, 0.1);
+    height: 30px;
+    width: 200px;
+    border: #ff4d4d 2px solid;
+    border-radius: 20px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 8px -5px #000000;
+}
+
+.reset-button:hover {
+    color: #e9e6e1;
+    background-color: #ff4d4d;
+    font-weight: bold;
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: 225ms ease-in-out;
+}
