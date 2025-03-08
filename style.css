@@ -296,3 +296,59 @@ header {
     transform: scale(1.05);
     transition: 225ms ease-in-out;
 }
+
+.reward-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #e9e6e1; /* Randfarbe */
+    padding: 10px; /* Mehr Platz für das Schließen-Symbol */
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    z-index: 1000;
+    width: 300px; /* Etwas größer für bessere Optik */
+}
+
+.popup-content {
+    background-color: #e9e6e1;
+    padding: 15px; /* Mehr Rand für das Bild */
+    border-radius: 8px;
+    position: relative; /* Für bessere Kontrolle des ❌ */
+}
+
+.reward-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto; /* Bild mittig */
+}
+
+.download-btn {
+    display: block;
+    background-color: #a9a30e; /* Neue Farbe */
+    color: #e9e6e1;
+    text-align: center;
+    padding: 10px;
+    margin-top: 15px; /* Mehr Abstand zum Bild */
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.close-btn {
+    position: absolute;
+    top: 1px; /* Höher, außerhalb des weißen Bereichs */
+    right: 1px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #eb3e08;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    line-height: 23px;
+}
