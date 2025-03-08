@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
         showPopup("Statistiken erfolgreich zurückgesetzt!");
     }
 
+    // Standard-Popup wie bisher
     function showPopup(message) {
         const popup = document.createElement('div');
         popup.textContent = message;
@@ -55,6 +56,107 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 3000);
     }
 
+    // Popup und Konfetti für Meilensteine
+    function showMilestonePopup(message) {
+        const popup = document.createElement('div');
+        popup.textContent = message;
+        popup.innerHTML = message;
+
+        // Stil für das Popup
+        popup.style.position = 'fixed';
+        popup.style.top = '50%';
+        popup.style.left = '50%';
+        popup.style.transform = 'translate(-50%, -50%)';
+        popup.style.backgroundColor = '#d34a0b';
+        popup.style.color = 'white';
+        popup.style.padding = '20px 40px';
+        popup.style.borderRadius = '250px';
+        popup.style.boxShadow = '0 5px 8px -5px #000000';
+        popup.style.zIndex = '1000';
+        popup.style.fontSize = '20px';
+        popup.style.textAlign = 'center';
+        popup.style.width = '400px';
+        popup.style.maxWidth = '80%';
+        popup.style.lineHeight = '1.5';
+
+        // Animations-Einstellungen
+        popup.style.opacity = '0';
+        popup.style.transition = 'opacity 0.5s ease-in-out';
+
+        document.body.appendChild(popup);
+
+        // Kurze Verzögerung, um die Animation zu triggern
+        setTimeout(() => {
+            popup.style.opacity = '1';
+        });
+
+        // Nach 3 Sekunden sanft ausblenden und dann entfernen
+        setTimeout(() => {
+            popup.style.opacity = '0';
+            setTimeout(() => {
+                popup.remove();
+            }, 500); // Warten, bis die Animation fertig ist
+        }, 3000);
+    }
+
+
+
+    // Konfetti-Funktion, wie von confetti.js vorgegeben
+    function fireConfetti() {
+        const count = 250,
+            defaults = { origin: { y: 0.6 } }; // Startpunkt etwas tiefer
+
+        function fire(particleRatio, opts) {
+            confetti(Object.assign({}, defaults, opts, {
+                particleCount: Math.floor(count * particleRatio),
+                ticks: 65, // **Weniger Ticks → schneller verschwinden**
+                decay: 0.75 // **Höherer Wert → schneller ausblenden**
+            }));
+        }
+
+        fire(0.25, {
+            spread: 30,
+            startVelocity: 100, // Noch schnellerer Start
+        });
+
+        fire(0.2, {
+            spread: 60,
+            startVelocity: 100, // Höhere Geschwindigkeit
+        });
+
+        fire(0.35, {
+            spread: 100,
+            decay: 0.80, // **Partikel verblassen noch schneller**
+            scalar: 0.9,
+        });
+
+        fire(0.1, {
+            spread: 120,
+            startVelocity: 80,
+            decay: 0.83,
+            scalar: 1.3,
+        });
+
+        fire(0.1, {
+            spread: 140,
+            startVelocity: 120, // **Maximale Geschwindigkeit**
+            decay: 0.75, // **Schnellste Verblassung**
+        });
+
+
+    }
+
+    // Prüft, ob ein Meilenstein erreicht wurde und zeigt Popup + Konfetti
+    function checkMilestone() {
+        const milestones = [5, 10, 20, 50, 100, 200, 500, 1000, 2500, 5000, 10000, 20000, 50000, 100000];
+        if (milestones.includes(stats.total)) {
+            showMilestonePopup(`Meilenstein: Du hast ${stats.total} Aufgaben gelöst.<br>Bleib dran 🚀!`);
+            const milestoneSound = new Audio('sounds/milestone.wav');
+            milestoneSound.play().catch(err => console.warn("Sound konnte nicht abgespielt werden:", err));
+            fireConfetti();
+        }
+    }
+
     function updateStatsUI() {
         document.querySelector(".stats p:nth-child(2)").textContent = `🔴 Hohe Priorität: ${stats.high}`;
         document.querySelector(".stats p:nth-child(3)").textContent = `🟠 Mittlere Priorität: ${stats.medium}`;
@@ -70,6 +172,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         saveStats();
         updateStatsUI();
+        checkMilestone();
     }
 
     function initDB() {
@@ -129,6 +232,7 @@ document.addEventListener('DOMContentLoaded', function () {
         statusBtn.addEventListener('click', function () {
             const checkSound = new Audio('sounds/check.wav');
             checkSound.play().catch(err => console.warn("Sound konnte nicht abgespielt werden:", err));
+
             statusBtn.innerHTML = '<img src="img/checked.png" alt="checked">';
 
             let priority = '';
