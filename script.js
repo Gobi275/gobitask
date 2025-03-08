@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function () {
         deleteBtn.innerHTML = '<img src="img/delete.png" alt="delete">';
 
         deleteBtn.addEventListener('click', () => {
-            const deleteSound = new Audio('sounds/delete.wav');
+            const deleteSound = new Audio('sounds/delete.ogg');
             deleteSound.play().catch(err => console.warn("Sound konnte nicht abgespielt werden:", err));
             todoItem.remove();
             if (id) deleteTodoIndexedDB(id);
