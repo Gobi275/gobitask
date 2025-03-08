@@ -146,16 +146,49 @@ document.addEventListener('DOMContentLoaded', function () {
 
     }
 
-    // Prüft, ob ein Meilenstein erreicht wurde und zeigt Popup + Konfetti
     function checkMilestone() {
         const milestones = [5, 10, 20, 50, 100, 200, 500, 1000, 2500, 5000, 10000, 20000, 50000, 100000];
+
         if (milestones.includes(stats.total)) {
-            showMilestonePopup(`Meilenstein: Du hast ${stats.total} Aufgaben gelöst.<br>Bleib dran 🚀!`);
-            const milestoneSound = new Audio('sounds/milestone.wav');
-            milestoneSound.play().catch(err => console.warn("Sound konnte nicht abgespielt werden:", err));
+            showMilestonePopup(stats.total);
             fireConfetti();
         }
     }
+
+    function showMilestonePopup(milestone) {
+        const popup = document.getElementById("reward-popup");
+        if (!popup) {
+            console.warn("Fehler: reward-popup nicht gefunden!");
+            return;
+        }
+
+        // Aktualisiere den Bild-Pfad basierend auf dem erreichten Meilenstein
+        const rewardImage = popup.querySelector(".reward-image");
+        if (rewardImage) {
+            rewardImage.src = `img/${milestone}tasks.png`;
+            rewardImage.alt = `Belohnung für ${milestone} Aufgaben`;
+        }
+
+        // Aktualisiere den Download-Button
+        const downloadBtn = popup.querySelector(".download-btn");
+        if (downloadBtn) {
+            downloadBtn.href = `img/${milestone}tasks.png`;
+            downloadBtn.download = `Belohnung_${milestone}.png`;
+        }
+
+        // Pop-up sichtbar machen
+        popup.classList.remove("hidden");
+
+        // Schließen-Button aktivieren
+        const closeButton = popup.querySelector(".close-btn");
+        if (closeButton) {
+            closeButton.addEventListener("click", () => {
+                popup.classList.add("hidden");
+            });
+        }
+    }
+
+
 
     function updateStatsUI() {
         document.querySelector(".stats p:nth-child(2)").textContent = `🔴 Hohe Priorität: ${stats.high}`;
@@ -296,6 +329,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const store = transaction.objectStore('todos');
         store.delete(id);
     }
+
+    function showRewardPopup() {
+        const popup = document.getElementById("reward-popup");
+        popup.classList.remove("hidden");
+
+        document.querySelector(".close-btn").addEventListener("click", function () {
+            popup.classList.add("hidden");
+        });
+    }
+
 
     addBtn.addEventListener('click', function () {
         const todoText = todoInput.value.trim();
