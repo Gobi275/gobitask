@@ -18,6 +18,10 @@ header {
     font-weight: bold;
 }
 
+.logo {
+    height: 75px;
+}
+
 .text-input-container {
     display: flex;
     align-items: center;
