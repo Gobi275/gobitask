@@ -1,25 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Outfit:wght@100..900&display=swap');
+
 body {
-    background-color: #292928;
-    font-family: "Outfit", sans-serif !important;
+    background: linear-gradient(106deg,rgba(238, 232, 231, 1) 0%, rgba(247, 237, 235, 1) 100%);
+    font-family: var(--body), sans-serif !important;
     margin: 0;
 }
 
+:root {
+    --heading: "Outfit";
+    --body: "Google Sans Flex";
+}
+
 header {
-    background-color: #222222;
-    color: #a9a30e;
+    background-color: #e5dcda;
+    color: #be4a2d;
     height: 100px;
-    box-shadow: 0 5px 13px -2px #000000;
+    box-shadow: 0 5px 13px -2px rgba(0, 0, 0, 0.12);
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding-right: 50px;
-    font-family: "Outfit", sans-serif;
+    font-family: var(--heading), sans-serif;
     font-size: 30px;
     font-weight: bold;
 }
 
 .logo {
-    height: 75px;
+    height: 55px;
 }
 
 .text-input-container {
@@ -30,28 +37,28 @@ header {
 }
 
 .mdl-button--colored {
-    background-color: #a9a30e !important;
+    background-color: #be4a2d !important;
     color: #e9e6e1 !important;
-    box-shadow: 0 0 8px -2px #000000;
+    box-shadow: 0 0 8px -2px #be4a2d;
     margin-left: 15px !important;
     margin-top: 0 !important;
 }
 
 .mdl-button--colored:hover {
-    background-color: #8a8b08 !important;
-    box-shadow: 0 0 10px -2px #000000;
+    background-color: #be4a2d !important;
+    box-shadow: 0 0 20px -2px #be4a2d;
 }
 
 .mdl-textfield__label,
 .mdl-textfield__input {
-    color: #e9e6e1 !important;
-    font-family: "Outfit", sans-serif;
+    color: #4e4746 !important;
+    font-family: var(--body), sans-serif;
 }
 
 .mdl-textfield__input {
     background-color: transparent !important;
-    color: #e9e6e1 !important;
-    border-bottom: 2px solid #a9a30e !important;
+    color: #4e4746 !important;
+    border-bottom: 2px solid #be4a2d !important;
 }
 
 .mdl-textfield.is-focused .mdl-textfield__input,
@@ -72,19 +79,19 @@ header {
 }
 
 .mdl-textfield.is-focused .mdl-textfield__label {
-    color: #a9a30e !important;
+    color: #be4a2d !important;
 }
 
 .mdl-textfield.is-focused .mdl-textfield__input {
-    border-bottom-color: #a9a30e !important;
+    border-bottom-color: #be4a2d !important;
 }
 
 .mdl-textfield__input::after {
-    background-color: #a9a30e !important;
+    background-color: #be4a2d !important;
 }
 
 .mdl-textfield .mdl-textfield__bottom-border {
-    background-color: #a9a30e !important;
+    background-color: #be4a2d !important;
 }
 
 .todo-list {
@@ -93,8 +100,8 @@ header {
 }
 
 .todo-item {
-    background-color: #333333;
-    color: #e9e6e1;
+    background-color: #e3c8c1;
+    color: #4e4746;
     margin: 10px 0;
     padding: 10px 20px;
     border-radius: 30px;
@@ -157,22 +164,27 @@ header {
 }
 
 .calendar-box {
+    font-family: var(--heading), sans-serif;
     min-height: 100px;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 450;
     width: 550px;
-    color: #e9e6e1;
+    color: #4e4746;
     margin: 10px;
     padding: 10px;
     margin-left: 50px;
     margin-right: 50px;
-    border-bottom: #a9a30e 2px solid;
+    border-bottom: #bbaba7 2px solid;
     display: flex;
     flex-direction: column;
 }
 
+#sonntag {
+    border: none;
+}
+
 .calendar-box:hover {
-    color: #a9a30e;
+    color: #be4a2d;
     transition: 225ms ease-in-out;
 }
 
@@ -182,13 +194,13 @@ header {
     border: 1px solid #cccccc;
     padding: 8px;
     font-size: 16px;
-    font-family: "Outfit", sans-serif !important;
+    font-family: var(--body), sans-serif !important;
 }
 
 .mdl-textfield__input option {
     color: #e9e6e1;
-    background-color: #222222;
-    font-family: "Outfit", sans-serif;
+    background-color: #4e4746;
+    font-family: var(--body), sans-serif;
 }
 
 .mdl-textfield__input:hover {
@@ -196,13 +208,13 @@ header {
 }
 
 .mdl-textfield__input:focus {
-    border-color: #a9a30e;
+    border-color: #be4a2d;
     outline: none;
 }
 
 .dropdown {
     background-color: #333333;
-    border: #a9a30e 2px solid;
+    border: #be4a2d 2px solid;
     border-radius: 20px;
     color: #e9e6e1;
 }
@@ -249,14 +261,14 @@ header {
 }
 
 .stats {
-    background-color: #333333;
+    background-color: #E6DDDB;
     border-radius: 30px;
-    color: #e9e6e1;
-    font-family: "Outfit", sans-serif;
-    margin: 40px 50px;
+    color: #4e4746;
+    font-family: var(--body), sans-serif;
+    margin: 40px 38px;
     padding: 10px 50px;
-    box-shadow: 0 5px 8px -5px #000000;
-    width: 475px;
+    box-shadow: 0 0 18px 2px rgba(255,255,255,0.24);
+    width: 650px;
     font-size: 18px;
 }
 
@@ -265,7 +277,7 @@ header {
 }
 
 .title {
-    font-family: "Outfit", sans-serif;
+    font-family: var(--heading), sans-serif;
 }
 
 .placeholder {
@@ -276,7 +288,7 @@ header {
     color:  #ff4d4d;
     background-color: rgba(255, 77, 77, 0.1);
     height: 30px;
-    width: 200px;
+    width: 250px;
     border: #ff4d4d 2px solid;
     border-radius: 20px;
     font-size: 15px;
@@ -285,15 +297,22 @@ header {
     justify-content: center;
     margin: 15px 0;
     margin-bottom: 20px;
-    box-shadow: 0 5px 8px -5px #000000;
+    box-shadow: 0 4px 24px -5px #dc350b;
 }
 
 .reset-button:hover {
     color: #e9e6e1;
     background-color: #ff4d4d;
-    font-weight: bold;
+    font-weight: 500;
     cursor: pointer;
+    box-shadow: 0 4px 35px 0 #ed1704;
     transform: scale(1.05);
+    transition: 225ms ease-in-out;
+}
+
+.reset-button:active {
+    box-shadow: 0 0 10px 0 #ed1704;
+    transform: scale(1);
     transition: 225ms ease-in-out;
 }
 
@@ -328,8 +347,8 @@ header {
 
 .download-btn {
     display: block;
-    background-color: #a9a30e; /* Neue Farbe */
-    color: #e9e6e1;
+    background-color: #be4a2d; /* Neue Farbe */
+    color: #4e4746;
     text-align: center;
     padding: 10px;
     margin-top: 15px; /* Mehr Abstand zum Bild */
@@ -351,4 +370,239 @@ header {
     height: 25px;
     text-align: center;
     line-height: 23px;
+}
+
+.calendar-container {
+    background-color: #E6DDDB;
+    margin-right: 30px;
+    margin-left: 30px;
+    padding: 30px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border-radius: 30px;
+    width: 700px;
+    box-shadow: 0 0 18px 2px rgba(255,255,255,0.24);
+}
+
+.entry-container {
+    background-color: #E6DDDB;
+    border-radius: 30px;
+    margin-left: 30px;
+    margin-top: 40px;
+    width: 700px;
+    padding: 30px;
+    padding-top: 10px;
+    padding-bottom: 60px;
+    box-shadow: 0 0 18px 2px rgba(255,255,255,0.24);
+}
+
+/* From Uiverse.io by chase2k25 */
+/* Container styling */
+.container {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Hide default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Wrapper for checkbox elements */
+.checkbox-wrapper {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Checkmark (square transforming to star) */
+.checkmark {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #e5dcda;
+    border: 0 solid #b9a592;
+    border-radius: 20px;
+    transition:
+            transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+            background 0.3s ease-in-out,
+            border-color 0.3s ease,
+            border-radius 0.3s ease;
+    box-shadow: 0 0 4px rgba(170, 129, 75, 0.3);
+}
+
+/* Hover effect */
+.container:hover .checkmark {
+    transform: scale(1.1);
+    box-shadow: 0 0 6px rgba(224, 179, 112, 0.5);
+}
+
+/* Checked state: Transform to star shape */
+.container input:checked ~ .checkbox-wrapper .checkmark {
+    background: linear-gradient(135deg, #ff5e62, #ffd452);
+    border-color: #ffd452;
+    border-radius: 50%;
+    transform: rotate(45deg) scale(1.2);
+    box-shadow: 0 0 20px rgba(255, 212, 82, 0.8);
+}
+
+/* Star checkmark symbol (pseudo-element) */
+.checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 50%;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    background: transparent;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition:
+            transform 0.3s cubic-bezier(0.4, 0, 0.2, 1.6),
+            opacity 0.3s ease-in-out;
+}
+
+/* Show star when checked */
+.container input:checked ~ .checkbox-wrapper .checkmark::after {
+    display: block;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+/* Nebula glow effect */
+.nebula-glow {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(
+            circle,
+            rgba(170, 135, 75, 0.3) 10%,
+            transparent 70%
+    );
+    border-radius: 50%;
+    opacity: 0.5;
+    transition:
+            opacity 0.3s ease,
+            transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Nebula swirl when checked */
+.container input:checked ~ .checkbox-wrapper .nebula-glow {
+    opacity: 1;
+    transform: rotate(180deg);
+    background: radial-gradient(
+            circle,
+            rgba(255, 94, 170, 0.5) 10%,
+            rgba(255, 212, 82, 0.3) 70%
+    );
+    animation: swirl 1.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Swirl animation keyframes */
+@keyframes swirl {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Sparkle effect */
+.sparkle-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Sparkle particles */
+.sparkle-container::before,
+.sparkle-container::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #ffd452;
+    border-radius: 50%;
+    opacity: 0;
+    transition: all 0.6s ease;
+}
+
+/* Sparkle animation when checked */
+.container input:checked ~ .checkbox-wrapper .sparkle-container::before {
+    transform: translate(12px, -12px);
+    opacity: 1;
+    animation: twinkle 0.8s cubic-bezier(0.5, 0, 0.5, 1) forwards;
+}
+
+.container input:checked ~ .checkbox-wrapper .sparkle-container::after {
+    transform: translate(-6px, 6px);
+    background: #ff5e62;
+    opacity: 1;
+    animation: twinkle 0.8s cubic-bezier(0.5, 0, 0.5, 1) 0.2s forwards;
+}
+
+/* Twinkle animation keyframes */
+@keyframes twinkle {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5) translate(10px, -10px);
+        opacity: 0;
+    }
+}
+
+/* Pulse effect on hover */
+.checkbox-wrapper::before {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: rgba(222, 206, 181, 0.2);
+    border-radius: 50%;
+    transform: scale(0);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1.4);
+    z-index: -1;
+}
+
+.container:hover .checkbox-wrapper::before {
+    transform: scale(1);
+}
+
+/* Bounce animation when checked */
+.container input:checked ~ .checkbox-wrapper .checkmark {
+    animation: bounce 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Bounce keyframes */
+@keyframes bounce {
+    0%,
+    100% {
+        transform: rotate(45deg) scale(1.2);
+    }
+    50% {
+        transform: rotate(45deg) scale(1.4);
+    }
+}
+
+.boxheader {
+    font-family: var(--heading), sans-serif;
+    font-size: 2rem;
+    margin-top: 2rem;
+    margin-left: 3rem;
+    color: #4e4746;
 }
