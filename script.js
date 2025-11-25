@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         popup.style.top = '20px';
         popup.style.left = '50%';
         popup.style.transform = 'translateX(-50%)';
-        popup.style.backgroundColor = '#a9a30e';
+        popup.style.backgroundColor = '#be4a2d';
         popup.style.color = 'white';
         popup.style.padding = '10px 20px';
         popup.style.borderRadius = '100px';
@@ -247,10 +247,37 @@ document.addEventListener('DOMContentLoaded', function () {
         const buttonContainer = document.createElement('div');
         buttonContainer.classList.add('todo-buttons');
 
-        const statusBtn = document.createElement('button');
-        statusBtn.classList.add('status-btn');
-        statusBtn.innerHTML = '<img src="img/unchecked.png" alt="unchecked">';
+        // --------------------------------------------------
+        // 🔥 UIVERSE CHECKBOX – statt statusBtn
+        // --------------------------------------------------
+        const statusContainer = document.createElement('label');
+        statusContainer.classList.add('container');
 
+        const statusCheckbox = document.createElement('input');
+        statusCheckbox.type = 'checkbox';
+
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('checkbox-wrapper');
+
+        const checkmark = document.createElement('div');
+        checkmark.classList.add('checkmark');
+
+        const nebulaGlow = document.createElement('div');
+        nebulaGlow.classList.add('nebula-glow');
+
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle-container');
+
+        wrapper.appendChild(checkmark);
+        wrapper.appendChild(nebulaGlow);
+        wrapper.appendChild(sparkle);
+
+        statusContainer.appendChild(statusCheckbox);
+        statusContainer.appendChild(wrapper);
+        // --------------------------------------------------
+
+
+        // ❌ DELETE BUTTON (bleibt gleich)
         const deleteBtn = document.createElement('button');
         deleteBtn.classList.add('delete-btn');
         deleteBtn.innerHTML = '<img src="img/delete.png" alt="delete">';
@@ -262,32 +289,37 @@ document.addEventListener('DOMContentLoaded', function () {
             if (id) deleteTodoIndexedDB(id);
         });
 
-        statusBtn.addEventListener('click', function () {
-            const checkSound = new Audio('sounds/check.wav');
-            checkSound.play().catch(err => console.warn("Sound konnte nicht abgespielt werden:", err));
+        // --------------------------------------------------
+        // ✔️ Checkbox-Haken führt den "Done"-Flow aus
+        // --------------------------------------------------
+        statusCheckbox.addEventListener('change', function () {
+            if (this.checked) {
+                const checkSound = new Audio('sounds/check.wav');
+                checkSound.play().catch(err => console.warn("Sound konnte nicht abgespielt werden:", err));
 
-            statusBtn.innerHTML = '<img src="img/checked.png" alt="checked">';
+                let p = '';
+                if (todoItem.classList.contains('priority-high')) p = 'high';
+                if (todoItem.classList.contains('priority-medium')) p = 'medium';
+                if (todoItem.classList.contains('priority-low')) p = 'low';
 
-            let priority = '';
-            if (todoItem.classList.contains('priority-high')) priority = 'high';
-            if (todoItem.classList.contains('priority-medium')) priority = 'medium';
-            if (todoItem.classList.contains('priority-low')) priority = 'low';
+                markTaskAsDone(todoItem, p);
 
-            markTaskAsDone(todoItem, priority);
-
-            setTimeout(() => {
-                todoItem.remove();
-                if (id) deleteTodoIndexedDB(id);
-            }, 350);
+                //Timeout-Code: setTimeout(() => {
+                    //todoItem.remove();
+                    //if (id) deleteTodoIndexedDB(id);
+                //}, 2000);
+            }
         });
 
-        buttonContainer.appendChild(statusBtn);
+        // Buttons einfügen
+        buttonContainer.appendChild(statusContainer);
         buttonContainer.appendChild(deleteBtn);
 
+        // Elemente einsetzen
         todoItem.appendChild(todoContent);
         todoItem.appendChild(buttonContainer);
 
-        document.querySelector(`.calendar-box:nth-child(${day + 4})`).appendChild(todoItem);
+        document.querySelector(`.calendar-box:nth-child(${day + 0})`).appendChild(todoItem);
     }
 
     function saveTodosIndexedDB(todoText, day, priority) {
