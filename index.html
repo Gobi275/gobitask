@@ -12,13 +12,18 @@
 </head>
 <body>
 <header>
-    <img class="logo" src="img/logo.png" alt="logo">
+    <img class="logo" src="img/logo.svg" alt="logo">
 </header>
+
+<div class="entry-container">
+
+<div class="boxheader">ToDo erstellen</div>
+
 <div class="text-input-container">
     <form id="todo-form">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input class="mdl-textfield__input" type="text" id="sample3" autocomplete="off">
-            <label class="mdl-textfield__label" for="sample3">To-Do hinzufügen</label>
+            <label class="mdl-textfield__label" for="sample3">Was ist zu tun?</label>
         </div>
     </form>
     <div class="add-button">
@@ -49,17 +54,20 @@
     </select>
 </div>
 
+</div>
+
 <div id="todo-list" class="todo-list">
 
 </div>
-
-<div class="calendar-box">Montag</div>
-<div class="calendar-box">Dienstag</div>
-<div class="calendar-box">Mittwoch</div>
-<div class="calendar-box">Donnerstag</div>
-<div class="calendar-box">Freitag</div>
-<div class="calendar-box">Samstag</div>
-<div class="calendar-box">Sonntag</div>
+<div class="calendar-container">
+    <div class="calendar-box">Montag</div>
+    <div class="calendar-box">Dienstag</div>
+    <div class="calendar-box">Mittwoch</div>
+    <div class="calendar-box">Donnerstag</div>
+    <div class="calendar-box">Freitag</div>
+    <div class="calendar-box">Samstag</div>
+    <div class="calendar-box" id="sonntag">Sonntag</div>
+</div>
 
 <div class="stats">
     <h3 class="title">Erledigte Aufgaben</h3>
