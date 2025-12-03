@@ -1,97 +1,78 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GobiTask</title>
+    <link rel="icon" type="image/svg" href="img/logo-white.svg">
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <link rel="icon" type="image/png" href="img/icon.png">
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+            integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
 </head>
 <body>
-<header>
-    <img class="logo" src="img/logo.svg" alt="logo">
-</header>
+    <div class="app">
 
-<div class="entry-container">
+        <header>
+            <h1>
+                <img class="logo-icon" src="img/logo-white.svg" alt="logo">
+            </h1>
+            <div class="info">
+                <h1>GobiTask</h1>
+                <p id="date"></p>
+            </div>
 
-<div class="boxheader">ToDo erstellen</div>
+        </header>
 
-<div class="text-input-container">
-    <form id="todo-form">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="sample3" autocomplete="off">
-            <label class="mdl-textfield__label" for="sample3">Was ist zu tun?</label>
+        <div class="todo-input">
+            <input type="text" id="task-input" placeholder="What do you need to do?">
+
+            <div class="dropdown" id="priority-dropdown">
+                <button class="dropdown-trigger">
+                    <span class="dropdown-label">Priorität</span>
+                    <img class="dropdown-icon" src="img/dropdown.svg" alt="">
+                </button>
+
+                <ul class="dropdown-menu">
+                    <li data-value="high">High</li>
+                    <li data-value="medium">Medium</li>
+                    <li data-value="low">Low</li>
+                </ul>
+
+                <!-- Hidden original value (optional) -->
+                <input type="hidden" id="priority-value">
+            </div>
+
+            <button id="add-task">
+                <i class="fas fa-plus"></i>
+            </button>
+
         </div>
-    </form>
-    <div class="add-button">
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" id="add-btn">
-            <i class="material-icons">add</i>
-        </button>
+
+        <div class="filters">
+            <span class="filter active" data-filter="all">All</span>
+            <span class="filter" data-filter="active">Active</span>
+            <span class="filter" data-filter="completed">Completed</span>
+        </div>
+
+        <div class="todos-container">
+            <ul id="todos-list">
+            </ul>
+            <div class="empty-state hidden">
+                <i class="fas fa-clipboard-list"></i>
+                <p>No tasks here yet</p>
+            </div>
+        </div>
+
+        <footer>
+            <p id="items-left">0 items left</p>
+            <button id="clear-completed">Clear completed</button>
+        </footer>
     </div>
-</div>
 
-<div class="dropdown-container">
-    <select id="day-select" class="mdl-textfield__input">
-        <option value="">Wochentag</option>
-        <option value="1">Montag</option>
-        <option value="2">Dienstag</option>
-        <option value="3">Mittwoch</option>
-        <option value="4">Donnerstag</option>
-        <option value="5">Freitag</option>
-        <option value="6">Samstag</option>
-        <option value="7">Sonntag</option>
-    </select>
-
-    <select id="priority-select" class="mdl-textfield__input">
-        <option value="" selected>Priorität</option>
-        <option value="high">🔴 dringend</option>
-        <option value="medium">🟠 normal</option>
-        <option value="low">🟢 niedrig</option>
-
-    </select>
-</div>
-
-</div>
-
-<div id="todo-list" class="todo-list">
-
-</div>
-<div class="calendar-container">
-    <div class="calendar-box">Montag</div>
-    <div class="calendar-box">Dienstag</div>
-    <div class="calendar-box">Mittwoch</div>
-    <div class="calendar-box">Donnerstag</div>
-    <div class="calendar-box">Freitag</div>
-    <div class="calendar-box">Samstag</div>
-    <div class="calendar-box" id="sonntag">Sonntag</div>
-</div>
-
-<div class="stats">
-    <h3 class="title">Erledigte Aufgaben</h3>
-    <p>🔴 Hohe Priorität: 0</p>
-    <p>🟠 Mittlere Priorität: 0</p>
-    <p>🟢 Niedrige Priorität: 0</p>
-    <p class="bold">🔴🟠🟢 Gesamt: 0</p>
-    <div class="reset-button">Statistiken zurücksetzen</div>
-</div>
-
-<div class="placeholder"></div>
-
-<div id="reward-popup" class="reward-popup hidden">
-    <div class="popup-content">
-        <span class="close-btn">&times;</span>
-        <img src="img/5tasks.png" alt="Belohnung" class="reward-image">
-        <a href="img/5tasks.png" download="GobiTask_5Tasks.png" class="download-btn">Bild speichern</a>
-    </div>
-</div>
-
-
-<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1"></script>
-<script src="script.js" defer></script>
+    <script src="script.js"></script>
 </body>
-
 </html>
