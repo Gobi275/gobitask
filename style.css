@@ -1,238 +1,583 @@
-// DOM Elements
-const taskInput = document.getElementById("task-input");
-const addTaskBtn = document.getElementById("add-task");
-const todosList = document.getElementById("todos-list");
-const itemsLeft = document.getElementById("items-left");
-const clearCompletedBtn = document.getElementById("clear-completed");
-const emptyState = document.querySelector(".empty-state");
-const dateElement = document.getElementById("date");
-const filters = document.querySelectorAll(".filter");
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&family=Outfit:wght@100..900&display=swap');
 
-let todos = [];
-let currentFilter = "all";
-
-addTaskBtn.addEventListener("click", () => {
-    addTodo(taskInput.value);  // To-do hinzufügen
-    resetPriorityDropdown()
-});
-
-taskInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") addTodo(taskInput.value);
-});
-
-clearCompletedBtn.addEventListener("click", clearCompleted);
-
-function resetPriorityDropdown() {
-    label.textContent = "Priorität";    // UI zurücksetzen
-    hiddenInput.value = "";             // Wert zurücksetzen
-
-    menu.querySelectorAll("li").forEach(li =>
-        li.classList.remove("selected")
-    );                                  // Auswahl entfernen
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-function addTodo(text) {
-    if (text.trim() === "") return;
+:root{
+    --primary: #be472c;
+    --primary-light: #cf5334;
+    --dark: #464443;
+    --light: #ede1dd;
+    --gray: #8b8482;
+    --danger: #c03621;
+    --success: #9bc50f;
+    --border: #dcd2cf;
+    --font: 'Google Sans Flex', sans-serif;
+    --headerFont: 'Outfit', sans-serif;
+}
 
-    const todo = {
-        id: Date.now(),
-        text,
-        completed: false,
-        priority: hiddenInput.value || ""   // <--- HIER!
-    };
+body{
+    font-family: var(--font), sans-serif;
+    background: radial-gradient(circle,rgba(219, 187, 173, 1) 0%, rgba(218, 209, 205, 1) 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: var(--dark);
+    overflow: hidden;
+}
 
-    todos.push(todo);
+.app {
+    width: 100%;
+    max-width: 650px;
+    background-color: #f1ecea;
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 10px 50px rgba(107, 36, 15, 0.11);}
 
-    saveTodos();
-    renderTodos();
-    taskInput.value = "";
+header {
+    background: linear-gradient(121deg,rgba(190, 71, 44, 1) 0%, rgba(191, 87, 61, 1) 100%);
+    color: var(--light);
+    padding: 22px 32px;
+    box-shadow: 0 7px 50px -2px rgba(132,43,8,0.8);
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    justify-content: left;
+    align-items: center;
+}
+
+.dropdown-add {
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+}
+
+header h1 {
+    font-size: 32px;
+    margin-bottom: 6px;
+    font-family: var(--headerFont), sans-serif;
+    font-weight: 500;
+}
+
+header p {
+    font-size: 17px;
+    opacity: 0.9;
+}
+
+.logo-icon {
+    max-height: 52px;
+    margin-top: 14px;
+}
+
+.todo-input {
+    padding: 26px 34px;
+    display: flex;
+    gap: 12px;
+    background-color: var(--light);
+    border-bottom: 2px solid var(--border);
+    box-shadow: inset 0 18px 24px -18px #9D1200;
+}
+
+.todo-input input {
+    flex: 1;
+    padding: 16px 20px;
+    border: 1px solid var(--border);
+    font-size: 1.3rem;
+    transition: all 0.2s;
+    border-radius: 50px;
+    font-family: var(--font), sans-serif;
+    background-color: #ffffff;
+    color: var(--dark);
+}
+
+.todo-input input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 15px 4px rgba(255, 58, 25, 0.2);
 }
 
 
-function saveTodos() {
-    localStorage.setItem("todos", JSON.stringify(todos));
-    updateItemsCount();
-    checkEmptyState();
+.todo-input button {
+    background-color: var(--primary);
+    color: var(--light);
+    width: 60px;
+    height: 60px;
+    border: none;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: all 0.2s;
 }
 
-function updateItemsCount() {
-    const uncompletedTodos = todos.filter((todo) => !todo.completed);
-    itemsLeft.textContent = `${uncompletedTodos?.length} item${
-        uncompletedTodos?.length !== 1 ? "s" : ""
-    } left`;
+.todo-input i {
+    scale: 1.5;
+    transition: transform .5s;
 }
 
-function checkEmptyState() {
-    const filteredTodos = filterTodos(currentFilter);
-    if (filteredTodos?.length === 0) emptyState.classList.remove("hidden");
-    else emptyState.classList.add("hidden");
+#add-task:hover {
+    background-color: var(--primary-light);
+    box-shadow: 0 0 24px -1px #ab3b1f;
+    transition: all 300ms;
+    scale: 1.1;
 }
 
-function filterTodos(filter) {
-    switch (filter) {
-        case "active":
-            return todos.filter((todo) => !todo.completed);
-        case "completed":
-            return todos.filter((todo) => todo.completed);
-        default:
-            return todos;
+#add-task:hover i {
+    transform: scale(1.2);
+    transition: all 0.5s ease-in-out;
+}
+
+#add-task:active {
+    background-color: var(--primary);
+    box-shadow: 0 0 20px -2px #ab3b1f;
+    transform: scale(0.9);
+}
+
+#add-task:active i {
+    transform: scale(0.85);
+    transition: all 0.1s ease-in-out;
+}
+
+.filters {
+    display: flex;
+    gap: 20px;
+    border-bottom: 2px solid var(--border);
+    padding: 20px 36px;
+    box-shadow: inset 0 15px 20px -15px rgb(222, 207, 204);
+    font-size: 1.3rem;
+}
+
+.filter {
+    padding: 7px 5px;
+    cursor: pointer;
+    color: var(--gray);
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+}
+
+.filter:hover {
+    color: var(--primary);
+}
+
+.filter.active {
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+    font-weight: 525;
+}
+
+.todos-container {
+    padding: 20px 0;
+    max-height: 310px;
+    overflow-y: auto;
+    min-height: 230px;
+}
+
+#todos-list {
+    list-style-type: none;
+}
+
+.todo-item {
+    padding: 16px 25px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.todo-item:hover {
+    background-color: var(--light);
+}
+
+.todo-item-text {
+    flex: 1;
+    font-size: 1.3rem;
+    transition: all 0.2s;
+}
+
+.todo-item.completed .todo-item-text{
+    text-decoration: line-through;
+    color: var(--gray);
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: var(--gray);
+    cursor: pointer;
+    font-size: 19px;
+    opacity: 0;
+    transition: all 0.2s;
+}
+
+.todo-item:hover .delete-btn {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    color: var(--danger);
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+    color: var(--gray);
+    font-size: 1.3rem;
+}
+
+.empty-state i {
+    font-size: 50px;
+    margin-bottom: 14px;
+    opacity: 0.7;
+}
+
+.hidden {
+    display: none;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 36px;
+    border-top: 2px solid var(--border);
+    background-color: var(--light);
+    font-size: 14px;
+    min-height: 60px;
+}
+
+#items-left {
+    color: var(--gray);
+    margin-left: 1rem;
+    font-size: 1.2rem;
+}
+
+#clear-completed {
+    font-family: var(--font), sans-serif;
+    background: none;
+    height: 3rem;
+    width: 12rem;
+    border: none;
+    border-radius: 1.5rem;
+    color: var(--gray);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1.2rem;
+}
+
+#clear-completed:hover {
+    color: var(--danger);
+    background-color: rgba(192, 54, 33, 0.15);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 11rem !important;
+    background-color: white;
+    border-radius: 50px;
+    font-family: var(--font), sans-serif;
+    border: 1px solid var(--border);
+}
+
+/* Trigger-Button */
+.dropdown-trigger {
+    width: 100% !important;
+    padding: 14px 14px 14px 20px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    background: #fff !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.dropdown-label {
+    color: #757575;
+    font-family: var(--font), sans-serif;
+    font-size: 1.3rem;
+}
+
+.dropdown-trigger:hover {
+    background-color: #f8f5f4;
+}
+
+.dropdown-trigger:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 20px 4px rgba(255, 58, 25, 0.2);
+}
+
+/* Icon */
+.dropdown-icon {
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+}
+
+/* Das Menü */
+.dropdown-menu {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.09);
+    backdrop-filter: blur(2px);
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    list-style: none;
+    padding: 6px 0;
+    margin: 0;
+    display: none;
+    z-index: 50;
+    font-size: 1.3rem;
+}
+
+/* Einträge */
+.dropdown-menu li {
+    padding: 14px 20px;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.dropdown-menu li:hover {
+    background: rgba(255, 255, 255, 0.47);
+    border-radius: 20px;
+}
+
+.dropdown-menu li.selected {
+    background: var(--light);
+    color: var(--primary);
+    border-radius: 20px;
+}
+
+/* --- Mobile (<=600px) --- */
+@media (max-width: 640px) {
+
+    body {
+        padding: 0;
+    }
+
+    .app {
+        width: 100%;
+        min-width: 100vw !important;
+        height: 100vh !important;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    header {
+        width: 100%;
+        padding: 1.5rem 2rem;
+        justify-content: center;
+    }
+
+    .todo-input {
+        flex-direction: column;
+        gap: 10px;
+        padding: 2rem 2rem;
+    }
+
+    .todo-item {
+        padding: 1rem 3rem;
+    }
+
+    .todos-container {
+        height: 40vh;
+        max-height: 100vh;
+    }
+
+    .dropdown-menu {
+        backdrop-filter: blur(8px);
+    }
+
+    .todo-input input,
+    .dropdown {
+        width: 100%;
+        flex: 1;
+    }
+
+    .filters {
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding: 1rem 4rem;
+    }
+
+    .dropdown-add {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    footer {
+        flex-direction: row;
+        gap: 10px;
+        text-align: center;
+        padding: 0 2rem;
     }
 }
 
-function renderTodos() {
-    todosList.innerHTML = "";
-
-    const filteredTodos = filterTodos(currentFilter);
-
-    filteredTodos.forEach((todo) => {
-        const todoItem = document.createElement("li");
-        todoItem.classList.add("todo-item");
-        if (todo.priority) {
-            todoItem.classList.add(`priority-${todo.priority}`);
-        }
-        if (todo.completed) todoItem.classList.add("completed");
-
-
-        // UIVERSE Checkbox Wrapper
-        const checkboxWrapper = document.createElement("div");
-        checkboxWrapper.classList.add("checkbox-wrapper");
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.id = "todo-" + todo.id;
-        checkbox.checked = todo.completed;
-        checkbox.addEventListener("change", () => toggleTodo(todo.id));
-
-        const label = document.createElement("label");
-        label.setAttribute("for", "todo-" + todo.id);
-
-        const tick = document.createElement("div");
-        tick.classList.add("tick_mark");
-
-        label.appendChild(tick);
-
-        checkboxWrapper.appendChild(checkbox);
-        checkboxWrapper.appendChild(label);
-
-        todoItem.appendChild(checkboxWrapper);
-
-
-        const todoText = document.createElement("span");
-        todoText.classList.add("todo-item-text");
-        todoText.textContent = todo.text;
-
-        const deleteBtn = document.createElement("button");
-        deleteBtn.classList.add("delete-btn");
-        deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
-        deleteBtn.addEventListener("click", () => deleteTodo(todo.id));
-
-        todoItem.appendChild(todoText);
-        todoItem.appendChild(deleteBtn);
-
-        todosList.appendChild(todoItem);
-    });
+.checkbox-wrapper * {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
 }
 
-function clearCompleted() {
-    todos = todos.filter((todo) => !todo.completed);
-    saveTodos();
-    renderTodos();
+.checkbox-wrapper input[type="checkbox"] {
+    display: none;
 }
 
-function toggleTodo(id) {
-    todos = todos.map((todo) => {
-        if (todo.id === id) {
-            return { ...todo, completed: !todo.completed };
-        }
-
-        return todo;
-    });
-    saveTodos();
-    renderTodos();
+.checkbox-wrapper label {
+    --size: 30px;
+    --shadow: calc(var(--size) * .07) calc(var(--size) * .1);
+    position: relative;
+    display: block;
+    width: var(--size);
+    height: var(--size);
+    margin: 0 auto;
+    background-color: #4158D0;
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    border-radius: 50%;
+    box-shadow: 0 var(--shadow) #ffbeb8;
+    cursor: pointer;
+    transition: 0.2s ease transform, 0.2s ease background-color,
+    0.2s ease box-shadow;
+    overflow: hidden;
+    z-index: 1;
+    margin-right: 1rem;
 }
 
-function deleteTodo(id) {
-    todos = todos.filter((todo) => todo.id !== id);
-    saveTodos();
-    renderTodos();
+.checkbox-wrapper label:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    width: calc(var(--size) * .7);
+    height: calc(var(--size) * .7);
+    margin: 0 auto;
+    background-color: #efebe9;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    box-shadow: inset 0 var(--shadow) #ffbeb8;
+    transition: 0.2s ease width, 0.2s ease height;
 }
 
-function loadTodos() {
-    const storedTodos = localStorage.getItem("todos");
-    if (storedTodos) todos = JSON.parse(storedTodos);
-    renderTodos();
+.checkbox-wrapper label:hover:before {
+    width: calc(var(--size) * .55);
+    height: calc(var(--size) * .55);
+    box-shadow: inset 0 var(--shadow) #ff9d96;
 }
 
-filters.forEach((filter) => {
-    filter.addEventListener("click", () => {
-        setActiveFilter(filter.getAttribute("data-filter"));
-    });
-});
-
-function setActiveFilter(filter) {
-    currentFilter = filter;
-
-    filters.forEach((item) => {
-        if (item.getAttribute("data-filter") === filter) {
-            item.classList.add("active");
-        } else {
-            item.classList.remove("active");
-        }
-        checkEmptyState();
-    });
-
-    renderTodos();
+.checkbox-wrapper label:active {
+    transform: scale(0.9);
 }
 
-function setDate() {
-    const options = { weekday: "long", month: "short", day: "numeric" };
-    const today = new Date();
-    dateElement.textContent = today.toLocaleDateString("en-US", options);
+.checkbox-wrapper .tick_mark {
+    position: absolute;
+    top: -1px;
+    right: 0;
+    left: calc(var(--size) * -.05);
+    width: calc(var(--size) * .6);
+    height: calc(var(--size) * .6);
+    margin: 0 auto;
+    margin-left: calc(var(--size) * .14);
+    transform: rotateZ(-40deg);
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-    loadTodos();
-    updateItemsCount();
-    setDate();
-    checkEmptyState();
-});
+.checkbox-wrapper .tick_mark:before,
+.checkbox-wrapper .tick_mark:after {
+    content: "";
+    position: absolute;
+    background-color: #fff;
+    border-radius: 2px;
+    opacity: 0;
+    transition: 0.2s ease transform, 0.2s ease opacity;
+}
 
+.checkbox-wrapper .tick_mark:before {
+    left: 0;
+    bottom: 0;
+    width: calc(var(--size) * .1);
+    height: calc(var(--size) * .3);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.23);
+    transform: translateY(calc(var(--size) * -.68));
+}
 
+.checkbox-wrapper .tick_mark:after {
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: calc(var(--size) * .1);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.23);
+    transform: translateX(calc(var(--size) * .78));
+}
 
+.checkbox-wrapper input[type="checkbox"]:checked + label {
+    background-color: #bd4f35;
+    background-image: linear-gradient(43deg, #df6853 0%, #d26750 46%, #e98953 100%);
+    box-shadow: rgba(138, 52, 0, 0.3) 0 5px 30px, rgba(156, 39, 0, 0.1) 0 11px 8px;
+}
 
-const dropdown = document.getElementById('priority-dropdown');
-const trigger = dropdown.querySelector('.dropdown-trigger');
-const menu = dropdown.querySelector('.dropdown-menu');
-const label = dropdown.querySelector('.dropdown-label');
-const hiddenInput = document.getElementById('priority-value');
+.checkbox-wrapper input[type="checkbox"]:checked + label:before {
+    width: 0;
+    height: 0;
+}
 
-// Dropdown öffnen/schließen
-trigger.addEventListener('click', () => {
-    const isOpen = menu.style.display === 'block';
-    menu.style.display = isOpen ? 'none' : 'block';
-});
+.checkbox-wrapper input[type="checkbox"]:checked + label .tick_mark:before,
+.checkbox-wrapper input[type="checkbox"]:checked + label .tick_mark:after {
+    transform: translate(0);
+    opacity: 1;
+}
 
-// Auswahl treffen
-menu.querySelectorAll('li').forEach(item => {
-    item.addEventListener('click', () => {
-        // Text übernehmen
-        label.textContent = item.textContent;
+.priority-high .checkbox-wrapper label {
+    background-image: linear-gradient(43deg, #d54b7a 0%, #dc4d4d 46%, #ec7c3f 100%);
+    box-shadow: 0 var(--shadow) rgba(187, 68, 47, 0.41);
+}
 
-        // Hidden Input aktualisieren
-        hiddenInput.value = item.dataset.value;
+.priority-high .checkbox-wrapper input[type="checkbox"]:checked + label {
+    background-color: #c94b45;
+    background-image: linear-gradient(43deg, #d44b79 0%, #db4d4d 46%, #ea7b3f 100%);
+    box-shadow: rgba(140, 35, 0, 0.4) 0 8px 35px, rgba(157, 0, 0, 0.2) 0 11px 8px;
+}
 
-        // Selected Style setzen
-        menu.querySelectorAll('li').forEach(li => li.classList.remove('selected'));
-        item.classList.add('selected');
+.priority-high .checkbox-wrapper label:before {
+    box-shadow: inset 0 var(--shadow) #f4998d;
+}
 
-        // Menü schließen
-        menu.style.display = 'none';
-    });
-});
+.priority-medium .checkbox-wrapper label {
+    background-image: linear-gradient(43deg, #b6511b 0%, #c67d0b 46%, #fdda3b 100%);
+    box-shadow: 0 var(--shadow) rgba(187, 122, 47, 0.61);
+}
 
-// Klick außerhalb schließt Dropdown
-document.addEventListener('click', (e) => {
-    if (!dropdown.contains(e.target)) {
-        menu.style.display = 'none';
-    }
-});
+.priority-medium .checkbox-wrapper input[type="checkbox"]:checked + label {
+    background-color: #e7a705;
+    background-image: linear-gradient(43deg, #b6511b 0%, #d0840b 46%, #ffd00f 100%);
+    box-shadow: rgba(140, 54, 0, 0.4) 0 8px 35px, rgba(157, 107, 0, 0.2) 0 11px 8px;
+}
+
+.priority-medium .checkbox-wrapper label:before {
+    box-shadow: inset 0 var(--shadow) rgba(218, 168, 128, 0.71);
+}
+
+.priority-low .checkbox-wrapper label {
+    background-image: linear-gradient(43deg, #25a25c 0%, #57bc2f 46%, #c1da49 100%);
+    box-shadow: 0 var(--shadow) rgba(110, 187, 47, 0.61);
+}
+
+.priority-low .checkbox-wrapper input[type="checkbox"]:checked + label {
+    background-color: #3cad48;
+    background-image: linear-gradient(43deg, #25a25c 0%, #57bc2f 46%, #c1da49 100%);
+    box-shadow: rgba(23, 140, 0, 0.4) 0 8px 35px, rgba(115, 157, 0, 0.2) 0 11px 8px;
+}
+
+.priority-low .checkbox-wrapper label:before {
+    box-shadow: inset 0 var(--shadow) rgba(173, 201, 109, 0.81);
+}
