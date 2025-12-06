@@ -93,20 +93,29 @@ function renderTodos() {
         if (todo.completed) todoItem.classList.add("completed");
 
 
-        const checkboxContainer = document.createElement("label");
-        checkboxContainer.classList.add("checkbox-container");
+        // UIVERSE Checkbox Wrapper
+        const checkboxWrapper = document.createElement("div");
+        checkboxWrapper.classList.add("checkbox-wrapper");
 
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
-        checkbox.classList.add("todo-checkbox");
+        checkbox.id = "todo-" + todo.id;
         checkbox.checked = todo.completed;
         checkbox.addEventListener("change", () => toggleTodo(todo.id));
 
-        const checkmark = document.createElement("span");
-        checkmark.classList.add("checkmark");
+        const label = document.createElement("label");
+        label.setAttribute("for", "todo-" + todo.id);
 
-        checkboxContainer.appendChild(checkbox);
-        checkboxContainer.appendChild(checkmark);
+        const tick = document.createElement("div");
+        tick.classList.add("tick_mark");
+
+        label.appendChild(tick);
+
+        checkboxWrapper.appendChild(checkbox);
+        checkboxWrapper.appendChild(label);
+
+        todoItem.appendChild(checkboxWrapper);
+
 
         const todoText = document.createElement("span");
         todoText.classList.add("todo-item-text");
@@ -117,7 +126,6 @@ function renderTodos() {
         deleteBtn.innerHTML = '<i class="fas fa-times"></i>';
         deleteBtn.addEventListener("click", () => deleteTodo(todo.id));
 
-        todoItem.appendChild(checkboxContainer);
         todoItem.appendChild(todoText);
         todoItem.appendChild(deleteBtn);
 
