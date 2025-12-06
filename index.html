@@ -30,25 +30,27 @@
         <div class="todo-input">
             <input type="text" id="task-input" placeholder="What do you need to do?">
 
-            <div class="dropdown" id="priority-dropdown">
-                <button class="dropdown-trigger">
-                    <span class="dropdown-label">Priorität</span>
-                    <img class="dropdown-icon" src="img/dropdown.svg" alt="">
+            <div class="dropdown-add">
+                <div class="dropdown" id="priority-dropdown">
+                    <button class="dropdown-trigger">
+                        <span class="dropdown-label">Priorität</span>
+                        <img class="dropdown-icon" src="img/dropdown.svg" alt="">
+                    </button>
+
+                    <ul class="dropdown-menu">
+                        <li data-value="high">🔴 High</li>
+                        <li data-value="medium">🟡 Medium</li>
+                        <li data-value="low">🟢 Low</li>
+                    </ul>
+
+                    <!-- Hidden original value (optional) -->
+                    <input type="hidden" id="priority-value">
+                </div>
+
+                <button id="add-task">
+                    <i class="fas fa-plus"></i>
                 </button>
-
-                <ul class="dropdown-menu">
-                    <li data-value="high">High</li>
-                    <li data-value="medium">Medium</li>
-                    <li data-value="low">Low</li>
-                </ul>
-
-                <!-- Hidden original value (optional) -->
-                <input type="hidden" id="priority-value">
             </div>
-
-            <button id="add-task">
-                <i class="fas fa-plus"></i>
-            </button>
 
         </div>
 
