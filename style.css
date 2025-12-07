@@ -446,8 +446,8 @@ footer {
     width: var(--size);
     height: var(--size);
     margin: 0 auto;
-    background-color: #4158D0;
-    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    background-color: #bd4f35;
+    background-image: linear-gradient(43deg, #df6853 0%, #d26750 46%, #e98953 100%);
     border-radius: 50%;
     box-shadow: 0 var(--shadow) #ffbeb8;
     cursor: pointer;
@@ -600,4 +600,5 @@ footer {
         transform: translateY(0);
     }
 }
+
 
