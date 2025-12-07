@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
+    <meta name="theme-color" content="#be472c">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>GobiTask</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/svg" href="img/logo-white.svg">
     <link rel="stylesheet" href="style.css">
     <link
@@ -77,6 +79,10 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/gobitask/sw.js");
+        }
+    </script>
 </body>
 </html>
-
