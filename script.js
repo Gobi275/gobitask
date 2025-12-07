@@ -38,7 +38,8 @@ function addTodo(text) {
         id: Date.now(),
         text,
         completed: false,
-        priority: hiddenInput.value || ""   // <--- HIER!
+        priority: hiddenInput.value || "",
+        justAdded: true
     };
 
     todos.push(todo);
@@ -87,6 +88,12 @@ function renderTodos() {
     filteredTodos.forEach((todo) => {
         const todoItem = document.createElement("li");
         todoItem.classList.add("todo-item");
+        if (todo.justAdded) {
+            todoItem.classList.add("enter");
+
+            // Beim nächsten Speichern wird es dauerhaft gelöscht
+            todo.justAdded = false;
+        }
         if (todo.priority) {
             todoItem.classList.add(`priority-${todo.priority}`);
         }
