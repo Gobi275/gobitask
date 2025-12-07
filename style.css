@@ -173,6 +173,7 @@ header p {
     max-height: 310px;
     overflow-y: auto;
     min-height: 230px;
+    overflow-x: hidden;
 }
 
 #todos-list {
@@ -584,3 +585,19 @@ footer {
 .priority-low .checkbox-wrapper label:before {
     box-shadow: inset 0 var(--shadow) rgba(173, 201, 109, 0.81);
 }
+
+.todo-item.enter {
+    animation: fade-in 0.25s ease-out;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
