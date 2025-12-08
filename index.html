@@ -20,13 +20,19 @@
     <div class="app">
 
         <header>
-            <h1>
-                <img class="logo-icon" src="img/logo-white.svg" alt="logo">
-            </h1>
-            <div class="info">
-                <h1>GobiTask</h1>
-                <p id="date"></p>
+            <div class="header-left">
+                <h1>
+                    <img class="logo-icon" src="img/logo-white.svg" alt="logo">
+                </h1>
+                <div class="info">
+                    <h1>GobiTask</h1>
+                    <p id="date"></p>
+                </div>
             </div>
+
+            <button id="theme-toggle" class="theme-btn">
+                <i class=""></i>
+            </button>
 
         </header>
 
@@ -36,7 +42,7 @@
             <div class="dropdown-add">
                 <div class="dropdown" id="priority-dropdown">
                     <button class="dropdown-trigger">
-                        <span class="dropdown-label">Priorität</span>
+                        <span class="dropdown-label">Priority</span>
                         <img class="dropdown-icon" src="img/dropdown.svg" alt="">
                     </button>
 
@@ -77,6 +83,7 @@
             <button id="clear-completed">Clear completed</button>
         </footer>
     </div>
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <script src="script.js"></script>
     <script>
