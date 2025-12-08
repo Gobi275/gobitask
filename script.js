@@ -7,6 +7,10 @@ const clearCompletedBtn = document.getElementById("clear-completed");
 const emptyState = document.querySelector(".empty-state");
 const dateElement = document.getElementById("date");
 const filters = document.querySelectorAll(".filter");
+const completeSound = new Audio("sounds/pop.mp3");
+completeSound.volume = 0.6;
+const addSound = new Audio("sounds/add.mp3");
+addSound.volume = 0.4;
 
 let todos = [];
 let currentFilter = "all";
@@ -23,7 +27,7 @@ taskInput.addEventListener("keydown", (e) => {
 clearCompletedBtn.addEventListener("click", clearCompleted);
 
 function resetPriorityDropdown() {
-    label.textContent = "Priorität";    // UI zurücksetzen
+    label.textContent = "Priority";    // UI zurücksetzen
     hiddenInput.value = "";             // Wert zurücksetzen
 
     menu.querySelectorAll("li").forEach(li =>
@@ -43,6 +47,8 @@ function addTodo(text) {
     };
 
     todos.push(todo);
+    addSound.currentTime = 0;
+    addSound.play();
 
     saveTodos();
     renderTodos();
@@ -149,14 +155,24 @@ function clearCompleted() {
 function toggleTodo(id) {
     todos = todos.map((todo) => {
         if (todo.id === id) {
-            return { ...todo, completed: !todo.completed };
+
+            const newCompleted = !todo.completed;
+
+            if (newCompleted) {
+                completeSound.currentTime = 0;
+                completeSound.play();
+            }
+
+            return { ...todo, completed: newCompleted };
         }
 
         return todo;
     });
+
     saveTodos();
     renderTodos();
 }
+
 
 function deleteTodo(id) {
     todos = todos.filter((todo) => todo.id !== id);
@@ -202,10 +218,8 @@ window.addEventListener("DOMContentLoaded", () => {
     updateItemsCount();
     setDate();
     checkEmptyState();
+
 });
-
-
-
 
 const dropdown = document.getElementById('priority-dropdown');
 const trigger = dropdown.querySelector('.dropdown-trigger');
@@ -242,4 +256,35 @@ document.addEventListener('click', (e) => {
     if (!dropdown.contains(e.target)) {
         menu.style.display = 'none';
     }
+});
+
+const themeToggle = document.getElementById("theme-toggle");
+
+// Theme beim Laden setzen
+if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+    themeToggle.innerHTML = '<i data-lucide="sun"></i>';
+} else {
+    themeToggle.innerHTML = '<i data-lucide="moon"></i>';
+}
+
+themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+
+    const isDark = document.body.classList.contains("dark");
+
+    // Icon wechseln
+    themeToggle.innerHTML = isDark
+        ? '<i data-lucide="sun"></i>'
+        : '<i data-lucide="moon"></i>';
+
+    lucide.createIcons(); // nach jedem Theme-Wechsel neu rendern
+
+
+    // Speichern
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    lucide.createIcons();
 });

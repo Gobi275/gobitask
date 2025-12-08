@@ -37,7 +37,8 @@ body {
     background-color: #f1ecea;
     border-radius: 40px;
     overflow: hidden;
-    box-shadow: 0 10px 50px rgba(107, 36, 15, 0.11);}
+    box-shadow: 0 10px 50px rgba(107, 36, 15, 0.11);
+}
 
 header {
     background: linear-gradient(121deg,rgba(190, 71, 44, 1) 0%, rgba(191, 87, 61, 1) 100%);
@@ -47,9 +48,43 @@ header {
     display: flex;
     flex-direction: row;
     gap: 25px;
-    justify-content: left;
+    justify-content: space-between;
     align-items: center;
 }
+
+.header-left {
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    align-items: center;
+    padding: 5px;
+}
+
+.theme-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.4rem;
+    margin-right: 10px;
+    transition: background 0.25s, transform 0.2s;
+}
+
+.theme-btn:hover {
+    background: rgba(255,255,255,0.33);
+    transform: scale(1.05);
+}
+
+.theme-btn:active {
+    transform: scale(0.87);
+}
+
 
 .dropdown-add {
     display: flex;
@@ -394,7 +429,7 @@ footer {
     }
 
     .todos-container {
-        height: 40vh;
+        height: 20vh;
         max-height: 100vh;
     }
 
@@ -449,7 +484,7 @@ footer {
     background-color: #bd4f35;
     background-image: linear-gradient(43deg, #df6853 0%, #d26750 46%, #e98953 100%);
     border-radius: 50%;
-    box-shadow: 0 var(--shadow) #ffbeb8;
+    box-shadow: 0 var(--shadow) rgba(189, 89, 78, 0.68);
     cursor: pointer;
     transition: 0.2s ease transform, 0.2s ease background-color,
     0.2s ease box-shadow;
@@ -527,7 +562,7 @@ footer {
 .checkbox-wrapper input[type="checkbox"]:checked + label {
     background-color: #bd4f35;
     background-image: linear-gradient(43deg, #df6853 0%, #d26750 46%, #e98953 100%);
-    box-shadow: rgba(138, 52, 0, 0.3) 0 5px 30px, rgba(156, 39, 0, 0.1) 0 11px 8px;
+    box-shadow: rgba(138, 52, 0, 0.29) 0 5px 30px, rgba(156, 39, 0, 0.21) 0 11px 8px;
 }
 
 .checkbox-wrapper input[type="checkbox"]:checked + label:before {
@@ -601,4 +636,86 @@ footer {
     }
 }
 
+/* --------------------- */
+/* DARK THEME */
+/* --------------------- */
 
+body.dark {
+    --primary: #ff5b38;
+    --primary-light: #ff6c48;
+    --dark: #f3f3f3;
+    --light: #22201e;
+    --gray: #b5b5b5;
+    --danger: #ff6b6b;
+    --success: #8fd450;
+    --border: #2e2e2e;
+
+    background: #1b1a1a !important;
+}
+
+body.dark .app {
+    background-color: #262322;
+    box-shadow: 0 10px 50px rgba(20, 19, 19, 0.97);
+}
+
+body.dark .todo-input {
+    background-color: #262322;
+    box-shadow: inset 0 18px 24px -18px rgba(0, 0, 0, 0.56);
+}
+
+body.dark .todo-input input {
+    background-color: #343232;
+    color: var(--dark);
+    border-color: var(--border);
+    box-shadow: 0 18px 16px -10px rgba(0, 0, 0, 0.16);
+}
+
+body.dark .todo-input button {
+    color: var(--dark);
+}
+
+body.dark .todo-input input:focus {
+    box-shadow: 0 18px 16px -10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .filters {
+    background: #221f1e;
+    border-color: #2b2b2b;
+    box-shadow: inset 0 15px 20px -15px rgba(2, 2, 2, 0.51);
+}
+
+body.dark footer {
+    background: #221f1e;
+    border-color: var(--border);
+}
+
+body.dark header {
+    color: var(--dark);
+    background: linear-gradient(121deg, rgb(207, 60, 27) 0%, rgb(230, 101, 67) 100%);
+}
+
+body.dark .dropdown {
+    background: #221f1e;
+}
+
+body.dark .dropdown-trigger {
+    background: #343232 !important;
+    box-shadow: 0 18px 16px -10px rgba(0, 0, 0, 0.16)
+}
+
+body.dark .dropdown-label {
+    color: var(--dark);
+}
+
+body.dark .dropdown-trigger:focus {
+    box-shadow: 0 18px 16px -10px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .checkbox-wrapper label:before {
+    background-color: #262322;
+    box-shadow: inset 0 var(--shadow) rgba(0, 0, 0, 0.5);
+}
+
+body.dark .checkbox-wrapper label {
+    box-shadow: 0 var(--shadow) rgba(0, 0, 0, 0.5);
+}
