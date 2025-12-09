@@ -9,7 +9,7 @@
 :root{
     --primary: #be472c;
     --primary-light: #cf5334;
-    --dark: #464443;
+    --dark: #3e434d;
     --light: #ede1dd;
     --gray: #8b8482;
     --danger: #c03621;
@@ -128,6 +128,11 @@ header p {
     font-family: var(--font), sans-serif;
     background-color: #ffffff;
     color: var(--dark);
+}
+
+.todo-input input::placeholder {
+    color: var(--dark);
+    opacity: .7;
 }
 
 .todo-input input:focus {
@@ -641,7 +646,7 @@ footer {
 /* --------------------- */
 
 body.dark {
-    --primary: #ff5b38;
+    --primary: #ff6a4b;
     --primary-light: #ff6c48;
     --dark: #f3f3f3;
     --light: #22201e;
@@ -650,21 +655,21 @@ body.dark {
     --success: #8fd450;
     --border: #2e2e2e;
 
-    background: #1b1a1a !important;
+    background: #212125 !important;
 }
 
 body.dark .app {
-    background-color: #262322;
-    box-shadow: 0 10px 50px rgba(20, 19, 19, 0.97);
+    background-color: #22282d;
+    box-shadow: 0 10px 50px rgba(21, 21, 24, 0.89);
 }
 
 body.dark .todo-input {
-    background-color: #262322;
+    background-color: #222326;
     box-shadow: inset 0 18px 24px -18px rgba(0, 0, 0, 0.56);
 }
 
 body.dark .todo-input input {
-    background-color: #343232;
+    background-color: #2a3135;
     color: var(--dark);
     border-color: var(--border);
     box-shadow: 0 18px 16px -10px rgba(0, 0, 0, 0.16);
@@ -679,27 +684,27 @@ body.dark .todo-input input:focus {
 }
 
 body.dark .filters {
-    background: #221f1e;
+    background: #1d2226;
     border-color: #2b2b2b;
     box-shadow: inset 0 15px 20px -15px rgba(2, 2, 2, 0.51);
 }
 
 body.dark footer {
-    background: #221f1e;
+    background: #1d2226;
     border-color: var(--border);
 }
 
 body.dark header {
     color: var(--dark);
-    background: linear-gradient(121deg, rgb(207, 60, 27) 0%, rgb(230, 101, 67) 100%);
+    background: linear-gradient(121deg, rgb(203, 65, 34) 0%, rgb(230, 101, 67) 100%);
 }
 
 body.dark .dropdown {
-    background: #221f1e;
+    background: #1e2026;
 }
 
 body.dark .dropdown-trigger {
-    background: #343232 !important;
+    background: #2a3135 !important;
     box-shadow: 0 18px 16px -10px rgba(0, 0, 0, 0.16)
 }
 
@@ -712,10 +717,25 @@ body.dark .dropdown-trigger:focus {
 }
 
 body.dark .checkbox-wrapper label:before {
-    background-color: #262322;
+    background-color: #22262b;
     box-shadow: inset 0 var(--shadow) rgba(0, 0, 0, 0.5);
 }
 
 body.dark .checkbox-wrapper label {
     box-shadow: 0 var(--shadow) rgba(0, 0, 0, 0.5);
+}
+
+body.dark .dropdown-menu li:hover {
+    background: rgba(14, 15, 17, 0.24);
+    border-radius: 20px;
+}
+
+body.dark .filter:hover {
+    color: #fff;
+}
+
+body.dark .filter.active {
+    color: #fff;
+    border-bottom: 3px solid var(--primary);
+    font-weight: 500;
 }
